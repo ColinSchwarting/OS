@@ -24,3 +24,20 @@ set-item WSMan:\localhost\client\trustedhosts -value "domain_controller,6.6.6.7"
 set-item WSMan:\localhost\client\trustedhosts -value "malwar.io" -concatenate -force
 [string to be called by .net]::empty
 [system.text.ASCIIencoding]::convert(
+
+
+REGISTRY EDIT IN POWERSHELL
+get-childitem HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+get-item HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+get-itemproperty HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+------- make new ones or removes them
+new-item
+remove-item
+
+set-itemproperty
+remove-itemproperty
+
+-----------------------
+
+New-PSDrive -Name Desktop -PSProvider FileSystem -Root C:\Users\andy.dwyer\Desktop\
+New-PSDrive -Name FileServer -PSProvider FileSystem -root "\\file-server\Warrior Share"
