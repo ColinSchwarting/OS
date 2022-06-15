@@ -1,0 +1,14 @@
+registry:
+  a database of information for everything window
+  
+  hklm has volatile date pertaining to hardware files
+
+hives:
+  classes root:
+  current user:
+    gives a link to the hkey users of the current user logged in
+  local machine:
+  users:
+    contains all user profiles
+  current configuration:
+    
