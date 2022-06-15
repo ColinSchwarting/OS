@@ -1,0 +1,26 @@
+powershell is a DLL runs system.management.automation.dll
+
+what's a host
+
+perform command on another computer:
+invoke-command
+
+
+start-transcript: records every command written down and their output
+stop-transcript: stops the recording
+get-content $home\documents\****the name of the transcript***.txt
+
+invoke-command -computername "IP" -scriptblock "command"
+invoke-command -computername "IP" {"command"}
+invoke-command -computername "IP", "another computer" -filepath <location of script> -AsJob
+Recieve-Job <whatever number it is> 
+
+New-PSSession -computername  (powershell equivilent of ssh, creates an established session)
+
+get-service winrm (this must be working in order to do the invoke-command and the new pssession)
+get-service rpceptmapper
+get-item WSMan:\localhost\client\trustedhosts
+set-item WSMan:\localhost\client\trustedhosts -value "domain_controller,6.6.6.7" -force
+set-item WSMan:\localhost\client\trustedhosts -value "malwar.io" -concatenate -force
+[string to be called by .net]::empty
+[system.text.ASCIIencoding]::convert(
