@@ -12,3 +12,44 @@ hives:
     contains all user profiles
   current configuration:
     
+edit registry in command line:
+  more
+  reg add
+  reg delete
+  reg copy
+  
+  ------------------------
+  
+  DEFAULT RUN KEYS----- check here for malicious persistance
+ HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\run
+ HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\runonce
+ HKCU\SOFTWARE\MICROSOFT\WINDOWS\CURRENTVERSION\RUN
+ HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\runonce
+ 
+ HKU\<SID>\SOFTWARE\Microsoft\Windows\Currentversion\run
+ HKLM\SOFTWARE
+ 
+ BASIC WINDOWS COMMANDS
+ 
+ ALTERNATE DATA STREAMS:
+ COMMAND LINES ---------------------------------
+echo I love coffee > coffee.txt
+dir coffee.txt >> gives info about txt file
+type coffee.txt >> I love coffee
+echo secret text shhh > coffee.txt:secret.info
+dir coffee.txt >> changes time, but nothing else from OG files
+type coffee.txt >> I love coffee
+more < coffee.txt:secret.info >> secret text shh
+dir /R coffee.txt >> shows the ADS
+echo secret text > OrdinaryFile.txt:SecretFile
+
+POWERSHELL----------------------------
+echo "ordinary text lol" > coffee.txt
+set-content coffee.txt -value "secret text actually" -stream topsecret.info
+gi .\coffee.txt -stream *
+gi .\coffee.txt -stream topsecret.info
+get-filehash .\coffee.txt | ft -wr <<< hash of text file doesn't change
+
+ 
+ 
+ 
