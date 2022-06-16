@@ -50,6 +50,25 @@ gi .\coffee.txt -stream *
 gi .\coffee.txt -stream topsecret.info
 get-filehash .\coffee.txt | ft -wr <<< hash of text file doesn't change
 
+-------------------HOST ENUMERATION----------------------
+where am i?
+>>hostname -f
+who am i?
+>>id
+>>whoami
+>>what can i do?
+>>sudo -l
+what's going on?
+>>netstat
+>>ps -elf
+>>ss
+>>top
+what's that?
+what's it doing?
+why/how is it going that?
+what's in there?
+cat files, view parent processes, view child processes
+view parents files
  
  
  
