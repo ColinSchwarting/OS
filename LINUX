@@ -1,0 +1,15 @@
+===========================================
+Bitches- BIOS (POST and loads MBR)
+Might- MBR 
+Get- GRUB
+Killed- Kernel
+In- Init
+Russia- Runlevel
+v1 of GRUB is menu.ist or grub.conf
+v2 of GRUB is grub.cfg
+first 512 bytes of hard drive contain the Master Boot Record
+/dev/sda <<  master bootloader location
+to see what kind of system it is " ps -p 1 "
+sudo xxd -l 512 -g -1 /dev/vda <--- this will execute a hexdump from the MBR
+dd if=/dev/vda of=mbrcopy bs=512 count=1 
+ls -l /sbin/init
