@@ -13,3 +13,29 @@ to see what kind of system it is " ps -p 1 "
 sudo xxd -l 512 -g -1 /dev/vda <--- this will execute a hexdump from the MBR
 dd if=/dev/vda of=mbrcopy bs=512 count=1 
 ls -l /sbin/init
+service --status-all
+cat /etc/innitab
+ls -l /etc/rc#.d
+
+[][][][][][][][][][][][FOR SYSTEMD boxes][][][][][][][][][][][][][][]
+--------------------------------------------------------------------------------------------
+ls -lisa /lib/systemd/system/default.target
+cat /lib/systemd/system/default.target
+ls -lisa /lib/systemd/system/graphical.target.wants
+sytstemctl show -p Wants "graphical.target" <--- lists the wants of a given target
+systemctl cat graphical.target
+systemctl list-unit-files
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+run levels 
+0 halt
+1 single user
+2 multi user no network
+3 multi user w/ network
+4 unused/experimental
+5 GUI
+6 reboot
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+whenever a user logins, the script /etc/profile is executed <<< you can hide shit in there if you want
+cat /etc/bash.bashrc
