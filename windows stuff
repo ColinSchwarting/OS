@@ -76,4 +76,46 @@ view parents files
  bcdedit /set (/deletevalue) safebootalternateshell yes
  msconfig << use the gui and figure it out
  
+ ------------------------------------------------------
+ REAL SHIT
+ Process Validity:
+ making sure a thing is what it says it is
+ look at what's actually being run
+ get the version of tools being run to find exploits
+ #(real quick tho: what's a process? it's an executable that requires some kind of user interaction)
+  
+  but also, what's a DLL? dynamic link library
+  >helps a program run
+  
+ services launch automatically or when certain things are met, similar to a scheduled task
+ without admin rights, services can't be killed
+ 
+ processes can be killed, however, regardless of privilege level
+ 
+ can hide stuff from APIs, but can't hide from the kernel
+ >>get-ciminstance will be the best way to find something that's trying to hide
+  >>get-wmiobject win32_process | where { $_.name  -like "powershell_ise.exe" } | select *
+         this will get you more information than get-object, including the PID and Parent PID
+         check full file path and the command line function to see what any given process is actually doing lol
+
+heres a cool one: get-wmiobject win32_process | where { $_.name  -like "maleware.exe" } | select name, processid, parentprocessid, path, commandline
+                                                        { $_.processid -eq "123" }
+                    get-wmiobject win32_process | ft name, processid, parentprocessid, path, commandline
+ if the binary of an exe doesn't run itself, something is sus
+
+
+GET THE DLLS of stuff:
+get-process powershell_ise | select -ExpandProperty modules
+(if the Dll is uppercase, it generally means it's run by system)
+
+get services and tasks and shit:
+tasklist (tasks)
+tasklist /svc (services)
+tasklist /m (modules)
+or just use task manager wtf
+or regedit << Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image
+ 
+ 
+ 
+ 
  
