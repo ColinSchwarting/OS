@@ -115,7 +115,42 @@ tasklist /m (modules)
 or just use task manager wtf
 or regedit << Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image
  
+ find services-----------------
  
+ start taskmgr
+ services
+ sc.exe >> sc.exe query >> sc.exe queryex type=service >> sc.exe queryex type=service state=inactive(or all)
+    get-ciminstance win32_service | where { $_.displayName -like "*firewall*" } | select name 
+sc.exe showsid "service"
+get-scheduledtask <<<<< we ONLY care about the running status
+  getscheduledtask -taskname "name" | select *
+schtasks /query /tn "name" /v /fo list
+or use task scheduler
+get-ciminstance win32_service | where { $_.Name -like "calc" } | select name processid,parentprocessid
+ ps: find-service"service" "service"
+get-ciminstance
+ gwmi win32_service | where { $_.name -like "Schedule" } | 
+
+network connections-----------------
+strings -accepteula << '-accepteula' auto accepts all pop ups and warnings from a command
+
+netstat -anob
+autoruns64 == is a tool that discovers software that automatically boots or starts
+procexp64 == can services and their children 
+tcpview == views ports and local address of services
+handle == view the handles of a process
+
+User account control=================
+
+registry key is located at HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
+>> gi HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Policies\System
+ if enableLUA is set to 1: it's enabled; elif set to 0: return disabled;
+ UAC Execution level in a file manifest----
+ asInvoker: runs w the same perms as the process that started it
+ requireAdministrator: will run w admin perms
+ highestAvailable: highest perms it can
  
- 
+-----------------
+  will the UAC prompt show? maybe idk
+  
  
