@@ -84,7 +84,8 @@ view parents files
  get the version of tools being run to find exploits
  #(real quick tho: what's a process? it's an executable that requires some kind of user interaction)
   
-  but also, what's a DLL? dynamic link library
+  but also, what's a cmd
+  ? dynamic link library
   >helps a program run
   
  services launch automatically or when certain things are met, similar to a scheduled task
@@ -182,7 +183,7 @@ registry key is located at HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Polic
   man crontab 
   crontab -e -u "username"
   
-  ps -elf --forst | grep CRON -B 5 
+  ps -elf --forest | grep CRON -B 5 
       > if you see CRON, it means at least one process is running
       
  ------------------------------------
@@ -194,6 +195,14 @@ registry key is located at HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Polic
  systemctl stop <servicename.service>
  sudo lsof | tail -10
  sudo lsof -c sshd
+ sudo lsof -i << find network connections and get process ID
+    ps -elf --forest | grep <process ID>
+ 
  ONLY worried about W, R, and U (write, read, user(both write and read))
  file descriptors 0,1,2 >> standard inpit, standard output, standard error
  
+ GET THE NUMBER OF FILES A PROCESS SPAWNS:
+ ps --ppid  {INSERT PID OF PROCESS} --no-headers | wc --lines
+
+ FIND SYMBOLIC LINKS TO SSHD PROCESS:
+ sudo find . -type l -ls | grep sshd | sort
