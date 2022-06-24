@@ -152,5 +152,48 @@ registry key is located at HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Polic
  
 -----------------
   will the UAC prompt show? maybe idk
+  ---------------------------------------------------------------------------------------------------------------------------
+  LINUX PROCESS VALIDITY:
+  kthreadd spawned processes have PPID of 2
+  2 primary processes after startup:
+    kernel-space processes: kthreadd
+    user-space processes: /sbin/init (PID=1)
+  view running processes in real time command: htop <-- press f5 to see trees between proccesses
+  --Get a snap shot of processes--
+  ps -ppid 2 -lf
+  ps -elf | grep sshd
+  ** if you see a process that's in capitals, it's a child process of a lowercase version **
+      ie: /usr/sbin/cron
+            >/usr/sbin/CRON
+  ps -elf --forest | grep (process) --context=5c
   
+  ld -l /usr/bib/passwd
+  --------------------------
+  fork() takes a process and replicates it, creating a child process
+  exec() end it
+  
+  use the command "jobs" to see running task
+  kill -9 [pid]
+  >> "all daemons are orphans, not all orphans are daemons" -Sgt Woods, 2022
+  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+  cat /etc/crontab >>>> shows system-wide crontab and shows crontab format
+      or /etc/cron.d
+      /var/spool/cron/crontabs
+  man crontab 
+  crontab -e -u "username"
+  
+  ps -elf --forst | grep CRON -B 5 
+      > if you see CRON, it means at least one process is running
+      
+ ------------------------------------
+ man service
+ service <service name> stop/start/restart/status
+ man systemctl
+ systemctl status ,service
+ systemctl list-units --all
+ systemctl stop <servicename.service>
+ sudo lsof | tail -10
+ sudo lsof -c sshd
+ ONLY worried about W, R, and U (write, read, user(both write and read))
+ file descriptors 0,1,2 >> standard inpit, standard output, standard error
  
