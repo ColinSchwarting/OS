@@ -206,3 +206,58 @@ registry key is located at HKLM:\SOFTWARE\Microsoft\Windows\Currentversion\Polic
 
  FIND SYMBOLIC LINKS TO SSHD PROCESS:
  sudo find . -type l -ls | grep sshd | sort
+-------------------------------------------
+windows artifacts:
+something left behind from code execution
+hunting artifacts is intelligence gathering, basically our job
+GET USER SID:
+get-localuser | select name, sid <<< only on local accounts
+get-wmiobject win32_useraccount | select name,sid
+wmic useraccount get name,sid 
+--------------------------------------------------
+userassist
+tracks the GUI based programs ran by a particular user
+get-item property
+'REGISTRY::HKEY_USERS\*\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\UserAssit\{CEBFF5CD-ACE2-4F4F-9178-9926F41749EA}\Count'
+THROUGH THIS INTO Cyberchef and use ROT13
+---------------------------------------
+get-itemproperty
+'HKLM:\SYSTEM\CurrentControlSet\Services\bam\UserSettings\* 
+<<< Device\HaddiskVolume1 is the same as C: drive
+---------------------------------------------------
+RECYCLE BIN
+The recycle bin is a very important location on a windows file system to understand. It can help you accomplish a forensic invesitgation.
+gci 'C:\$RECYCLE.BIN' -Recurse -Verbose -Force | select *
+gci 'C:\$RECYCLE.BIN' -Recurse -Force
+two files are created when something is deleted 
+$R is the contents for the deleted file, $I is corresponding to it. each $R and $I has a random number after them that match each other for each deleted file
+gci -force -recurse 'C:\$Recycle.Bin\S-1-5-21-*' | where { $_.name -like "`$R" }| ForEach-Object { Write-Host "$_.name -->" -Foregroundcolor green -nonewline ; write-host (get-content $_.fullname) }
+THIS GETS THE DELETED FILE CONTENTS ^^^^^^^^^^
+DO THE SAME COMMMAND BUT REPLACE THE R WITH AN I IN ORDER TO GET THE FILE PATH AND OG FILENAME
+---------------------------------------------------
+PREFETCH
+keeps a copy of binary and saves it in a file
+gci -path 'C:\Windows\Prefetch' -ErrorAction Continue | select * | select -first 5
+the prefetch doesn't exist unless the thing has been run
+**evidence of an executable being ran**
+gci c:\windows\prefetch
+---------------------------------------------
+gci -Recurse c:\Users\*\Appdata\Roaming\Microsoft\Windows\Recent -ErrorAction Continue | select FullName, LastAcessTime 
+view the access time for any that stand out <<<<
+
+-----------------------------------------------
+browser artifacts
+stores details for each user asccount
+history, cookies, favorites, bookmarks, etc
+.\strings.exe 'C:\Users\<username>\AppData\Local\Google\Chrome\UserData\Default\History'
+-------------------
+AUDITING (AGAIN)
+what gets logged
+cd $HOME
+AUDITPOL /get /category:*
+LSASS sends the event log messages on to the Event Logger
+two kinds of logs, system and cutom
+get-eventlog * << if Application, Security, or System logs have little to no entries in them, someone must have cleared them
+get-eventlog -logname Securtity | select -first 5 | ft -autosize -wrap
+get-eventlog -logname Securtity -message "*logon*" | select -first 5 | ft -autosize -wrap
+get-winevent
