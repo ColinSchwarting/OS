@@ -266,3 +266,68 @@ VIEW ALL USERS RECENT HISTORY
 Get-Item "REGISTRY::HKEY_USERS\*\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\.txt" | select -Expand property | ForEach-Object {
     [System.Text.Encoding]::Default.GetString((Get-ItemProperty -Path "REGISTRY::HKEY_USERS\*\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\.txt" -Name $_).$_)
 }   
+
+--------------------------------------------------------
+LINUX LOGS
+/var/log/auth.log
+/var/run/utmp --- current user logged in
+/var/log/wtmp
+/var/log/btmp --- failed log in
+>> facility.severity
+facility codes:  
+0 kernel messages
+1 user level
+2 mail system
+3 system daemons
+4 security 
+5 internally by syslogd
+6 line printer
+7 network news
+8-23, not important to this course
+severity codes
+0 emerg, panic
+1 alert
+2 crit
+3 err
+4 warn
+5 notice
+6 info
+7 debug   ##the severity level will capture the level its set to and higher, unless the severity  has an ! in front of it, then it will capture that level and lower
+ls /etc/rsyslog.d
+
+
+sudo cat /var/log/syslog
+ >> gets system logs
+ >> grep timesync /var/log/syslog (helps delminate through log)
+dmesg << a command that queries /proc/kmsg
+ls -l /var/log << rotates logs weekly 
+cat /etc/logroate.conf << conf file for logrotate
+sudo last -f /var/run/utmp << check who's logged in
+sudo last -f /var/log/wtmp << ip addresses and times of logins
+tail /var/log/auth.log  << log in attempts << it shows a sucessful session when your see 'New session', it ends when you see 'Removed session'
+sudo cat /var/log/messages
+TLDR:
+location: /var/log
+config file: /etc/rsyslog.conf
+service: /usr/sbin/rsyslogd
+
+
+log enumeration
+  last -f /var/log/{wtmp,btmp,utmp} -- needed to view data files
+  > /var/log/messages - wipes logs completely
+ 
+ =============== SYSTEMD =================
+ journalctl -e << queries logs on systemd 
+ journalctl --list-boots << shows boot sessions ( when the computer turned on ) 
+ journalctl -b [ insert boot ID from above here ] << only shows from that particular boot session
+ journalctl --since "2022-01-01" --until "2022-02-02"
+ journalctl -p err << shows all logs marked as an 'error', can replace err with any of the severity listing
+ journalctl -n << last 10 enteries
+ journalctl -f << messages as they update in real time
+ cat /etc/systemd/journald.conf << conf file for journalctl
+ auditctl -l << checks rules
+ auditctl -s << checks current state of the control system
+ aureport << summary report of audit logs
+ auditctl -w /etc/hosts -p wa -k hosts_file_change << adds new rules (captial W will remove it)
+ ausearch -k 'entry' << searchs the audit logs for something
+ 
