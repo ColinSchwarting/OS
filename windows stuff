@@ -503,7 +503,11 @@ MEMORY ANALYSIS AND VOLATILITY
    gpresult /r << get's group policies
    gpresult /force << get's group policies right tf now
    -----------------------------------------------------------------------------------------------------------------
-   REVIEW FOR WINDOWS:
+ WINDOWS HOST ENUMERATIONS AND LINUX PROCESS VALIDITY 
+ 
+ 
+  SHOULD I RAISE MY HAND??? YES!!!!!!!
+  REVIEW FOR WINDOWS:
    net use * http://live.sysinternals.com
    
    get path of a service:
@@ -557,4 +561,5 @@ MEMORY ANALYSIS AND VOLATILITY
     -ps -p [PID] #get's cmd for PID#
     -systemctl cat [NAME OF SERVICE]
     -cat /etc/ssh/sshd_config << an example of view the configuration file of a service, check if anything is strange in this
+    /etc/bash/bash.rc
     
